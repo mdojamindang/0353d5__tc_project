@@ -7,7 +7,7 @@ The purpose of this exercise is to use a randomly generated restaurant informati
 
 ## Project Structure
 The project is stores in a repository labeled using `<hex_code>__<company_initials>_project` format. It is separated into multiple subfolders to show clear boundaries between different parts of the components. 
-
+```
 0353d5__tc_project/
 ├── code/
 │ └── app.py 
@@ -20,6 +20,7 @@ The project is stores in a repository labeled using `<hex_code>__<company_initia
 ├── dev/
 ├── requirements.txt
 └── README.md
+```
 
  - **`code/`**  
   Contains the application code and other future codes.
