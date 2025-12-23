@@ -110,3 +110,6 @@ python3 config/ingest_data.py
 ```bash
 streamlit run code/app.py
 ```
+### Deployed Dashboard
+A live version of the dashboard is available here:  
+https://table-check-demo-app.streamlit.app/
