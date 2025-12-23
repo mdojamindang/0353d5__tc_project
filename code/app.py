@@ -5,7 +5,7 @@ import numpy as np
 
 import streamlit as st
 
-conn = duckdb.connect("database/data.duckdb")
+conn = duckdb.connect("database/data.duckdb", read_only=True)
 
 # Dataframe for restaurant traffic
 df_1 = conn.sql("""
@@ -140,25 +140,83 @@ df_6 = conn.sql("""
     LIMIT 1
 """).df()
 
-# col1, col2, col3 = st.columns(3)
-# col1.metric("Restaurant Name", df_1["restaurant_names"])
-# col2.metric("Total Customer Visits", df_1["count_customer"])
-# col3.metric("Total Customers", df_1["count_unique_customer"])
+restaurant_names = df_1['restaurant_names'].sort_values().unique().tolist()
+idx = restaurant_names.index("the-restaurant-at-the-end-of-the-universe")
+
 st.subheader("Restaurant Traffic")
-st.table(df_1)
+st.text("Description: This table shows the number of customer visits for each shop and the number of unique customers the visited each restaurant")
+df_1.columns = ["Restaurant","Customer Visits", "Customers"]
+st.dataframe(df_1,hide_index=True)
+
+
+st.text("  ")
+st.text("  ")
+st.text("  ")
+
+col_value = st.selectbox(
+    "Select Restaurant to View",
+    restaurant_names,
+    index = idx
+)
+
+df_tempt = conn.execute("""
+    SELECT
+        restaurant_names,
+        COUNT(*) AS count_customer,
+        COUNT(DISTINCT first_name) AS count_unique_customer
+    FROM TABLE_CHECK_DATA
+    WHERE restaurant_names = ?
+    GROUP BY restaurant_names
+""",[col_value]).df()
+
+st.text("Description: This component displays customer traffic for a specific restaurant")
+df_tempt.columns = ["Restaurant","Customer Visits", "Customers"]
+st.dataframe(df_tempt, use_container_width=True, hide_index=True)
+
+
+st.divider()
 
 st.subheader("Restaurant Income")
-st.table(df_2)
+
+df_2.columns = ["Restaurant", "Income"]
+st.text("Description: This component is for showing the restaurant incomes")
+st.dataframe(df_2 , hide_index=True)
+
+st.text("  ")
+st.text("  ")
+st.text("  ")
+
+st.text("Description: This component is a graphical representation of each restaurant incomes")
+st.bar_chart(
+    df_2.set_index("Restaurant")["Income"])
+
+st.divider()
 
 st.subheader("Restaurant Popular Items")
-st.table(df_3)
+st.text("Description: This component is for showing the most popular items per restaurant")
+df_3.columns = ["Restaurant","Menu", "Number of Orders"]
+st.dataframe(df_3 , hide_index=True)
+
+st.text("  ")
+st.text("  ")
+st.text("  ")
 
 st.subheader("Restaurant Profitable Items")
-st.table(df_4)
+st.text("Description: This component is for showing the most profitable items per restaurant")
+df_4.columns = ["Restaurant","Menu", "Total Income"]
+st.dataframe(df_4 , hide_index=True)
 
-st.subheader("Restaurant Loyal Customer ")
-st.table(df_5)
+st.divider()
+
+st.subheader("Restaurant Loyal Customers")
+st.text("Description: This component is for showing the most frequent visitor per restaurant")
+df_5.columns = ["Restaurant","Customer Name", "Total Customer Spending", "Total Number of Visits"]
+st.dataframe(df_5 , hide_index=True)
 
 st.subheader("Best Restaurateur")
-st.table(df_6)
+st.text("Description: This component is for showing the customer that frequented restaurants the most")
+df_6.columns = ["Customer Name","Number of Restaurant Visits"]
 
+st.dataframe(df_6 , hide_index=True)
+
+conn.close()
