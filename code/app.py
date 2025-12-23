@@ -146,7 +146,7 @@ idx = restaurant_names.index("the-restaurant-at-the-end-of-the-universe")
 st.subheader("Restaurant Traffic")
 st.text("Description: This table shows the number of customer visits for each shop and the number of unique customers the visited each restaurant")
 df_1.columns = ["Restaurant","Customer Visits", "Customers"]
-st.dataframe(df_1,hide_index=True)
+st.dataframe(df_1 , use_container_width=True , hide_index=True)
 
 
 st.text("  ")
@@ -180,7 +180,7 @@ st.subheader("Restaurant Income")
 
 df_2.columns = ["Restaurant", "Income"]
 st.text("Description: This component is for showing the restaurant incomes")
-st.dataframe(df_2 , hide_index=True)
+st.dataframe(df_2 , use_container_width=True , hide_index=True)
 
 st.text("  ")
 st.text("  ")
@@ -195,7 +195,7 @@ st.divider()
 st.subheader("Restaurant Popular Items")
 st.text("Description: This component is for showing the most popular items per restaurant")
 df_3.columns = ["Restaurant","Menu", "Number of Orders"]
-st.dataframe(df_3 , hide_index=True)
+st.dataframe(df_3 , use_container_width=True , hide_index=True)
 
 st.text("  ")
 st.text("  ")
@@ -204,19 +204,19 @@ st.text("  ")
 st.subheader("Restaurant Profitable Items")
 st.text("Description: This component is for showing the most profitable items per restaurant")
 df_4.columns = ["Restaurant","Menu", "Total Income"]
-st.dataframe(df_4 , hide_index=True)
+st.dataframe(df_4 , use_container_width=True , hide_index=True)
 
 st.divider()
 
 st.subheader("Restaurant Loyal Customers")
 st.text("Description: This component is for showing the most frequent visitor per restaurant")
 df_5.columns = ["Restaurant","Customer Name", "Total Customer Spending", "Total Number of Visits"]
-st.dataframe(df_5 , hide_index=True)
+st.dataframe(df_5 , use_container_width=True , hide_index=True)
 
 st.subheader("Best Restaurateur")
 st.text("Description: This component is for showing the customer that frequented restaurants the most")
 df_6.columns = ["Customer Name","Number of Restaurant Visits"]
 
-st.dataframe(df_6 , hide_index=True)
+st.dataframe(df_6 , use_container_width=True , hide_index=True)
 
 conn.close()
