@@ -1,6 +1,3 @@
-
-
-
 # Restaurant Project  
 
 This is an lightweight analytics dashboard that uses **DuckDB** as the backing database and **Streamlit** for interactive visualization.
